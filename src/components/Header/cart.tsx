@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/store";
 import CartBottom from "../CartPopup/cart_bottom";
 import CartProductList from "../CartPopup/cart_product_list";
@@ -6,6 +6,19 @@ import CartProductList from "../CartPopup/cart_product_list";
 const Cart = () => {
   const count = useAppSelector((state) => state.cart.totalCount);
   const [show, setShow] = useState("none");
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  });
+
+  const onScroll = (e: Event) => {
+    if (show !== "none") {
+      setShow("none");
+    }
+  };
 
   const toggleMenu = () => {
     if (show === "none") {
